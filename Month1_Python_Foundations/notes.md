@@ -1,125 +1,157 @@
-# Python Study Notes
+# Python Essential Training Notes
 
-## First Python Program
+## 1. First Python Program
 
-- Python files use the `.py` extension.
-- A basic script is often named `hello.py`.
-- To print text to the terminal, use:
+Python files use the `.py` extension. A basic script is often named `hello.py`.
+
+To print text to the terminal, use:
 
 ```python
 print("Hello, World!")
 ```
 
-- The text inside the quotes is called a string.
-- Quotes are required so Python knows the value is text.
-- Comments start with `#` and are ignored by Python when the program runs.
+The text inside the quotes is called a string. The quotes are required so Python knows the value is text.
+
+Comments start with `#` and are ignored by Python when the program runs:
 
 ```python
 # This is a comment
 print("Hello, World!")
 ```
 
-## Running a Python File
+### Running a Python file
 
-- Save the file first.
-- Open the terminal.
-- Change to the folder containing the file:
+1. Save the file.
+2. Open the terminal.
+3. Change to the folder containing the file:
 
 ```bash
 cd path/to/folder
 ```
 
-- Run the script with:
+4. Run the script:
 
 ```bash
 python hello.py
 ```
 
-## Helpful Notes
-
-- Use a text editor such as VS Code to write Python code.
-- `cd` means “change directory.”
-- Tab completion can help you navigate folders faster.
-- This first program is a basic introduction to Python and helps build confidence.
-
-## Example
+### Example
 
 ```python
-# welcome to the training
+# Welcome to the training
 print("Hello, welcome to the training session!")
 ```
 
-## Summary
+### Key Takeaways
+- Python files end with `.py`
+- Use `print()` to display output
+- Strings must be wrapped in quotes
+- `#` creates comments
+- You run Python files from the terminal using `python filename.py`
 
-The goal of this exercise is to learn how to:
-- create a Python file,
-- write a simple program,
-- save it,
-- and run it in the terminal.
-````
+---
 
-# Jupyter Notebooks
+## 2. Jupyter Notebooks
 
-## What are Jupyter Notebooks?
-- Jupyter Notebook is a web-based tool for writing and running Python code.
-- It is part of the Project Jupyter ecosystem.
-- It is commonly used for data science, experiments, reports, and teaching.
+Jupyter Notebook is a web-based tool for writing and running Python code. It is part of the Project Jupyter ecosystem and is commonly used for data science, experiments, reports, and teaching.
 
-## File Type
-- Notebook files use the `.ipynb` extension.
-- `.ipynb` stands for IPython Notebook.
+### File Type
+Notebook files use the `.ipynb` extension.
 
-## Why Use Jupyter?
-- Easy to test small blocks of code
-- Good for learning and experimentation
+### Why Use Jupyter?
+- Great for learning and testing code
 - Shows code and output together
-- Great for creating reports, charts, and explanations
-- Can be exported to many formats
+- Useful for reports and visualizations
+- Easy to share and export
 
-## How It Works
-- You open Jupyter Notebook in the browser.
-- It starts a local web app on your computer.
-- You create or open notebooks and write code in cells.
+### How It Works
+- Open Jupyter Notebook in the browser
+- It starts a local web application on your computer
+- You create or open notebooks and write code in cells
 
-## Cells
-- A notebook is made of cells.
-- Each cell can contain Python code or markdown text.
-- To run a code cell, use `Shift + Enter`.
+### Cells
+A notebook is made of cells. Each cell can contain:
+- Python code
+- Markdown text
 
-## Command Mode vs Edit Mode
-- Click outside a cell to enter command mode.
-- Click inside a cell to enter edit mode.
-- In command mode:
-  - `A` adds a cell above
-  - `B` adds a cell below
-  - `dd` deletes the selected cell
-  - `M` changes a cell to markdown
-  - `Y` changes it back to code
+To run a code cell, use:
 
-## Markdown Cells
-- Markdown cells are used for headings, notes, and explanations.
-- Example:
-  ```markdown
-  # My Title
-  - Bullet point
-  - Another bullet
-  ```
-
-## Example
-```python
-print("Hello, Jupyter!")
+```text
+Shift + Enter
 ```
 
-## GitHub and VS Code
-- Jupyter notebooks display nicely in GitHub.
-- They can also be opened and edited in Visual Studio Code.
-- VS Code supports notebook editing and running similar to the browser version.
+### Command Mode vs Edit Mode
+- Click outside a cell to enter Command Mode
+- Click inside a cell to enter Edit Mode
 
-## Key Takeaways
-- Jupyter Notebooks are a popular tool for Python learning and data science.
-- They make coding more interactive and organized.
-- The main shortcut to remember is `Shift + Enter` to run code.
-- You do not need to memorize every shortcut at once; you can learn them as needed.
-````
+### Common Shortcuts
+- `A` = add a cell above
+- `B` = add a cell below
+- `D` + `D` = delete selected cell
+- `M` = convert cell to Markdown
+- `Y` = convert cell to code
 
-If you want, I can also turn this into a more polished “Week 1 Notes” style page for GitHub.
+### Markdown Example
+
+```markdown
+# Python
+
+## Welcome to the Training
+- This is a bullet point
+- This is another bullet point
+```
+
+### Example Code
+
+```python
+print("Welcome to the training")
+```
+
+```python
+print((151 + 9) / 20)
+```
+
+### VS Code Support
+Jupyter notebooks can also be opened and edited in Visual Studio Code, which supports notebook editing and execution similar to the browser version.
+
+### Key Takeaways
+- Jupyter is useful for interactive Python work
+- Notebooks are made of cells
+- Use `Shift + Enter` to run code
+- You can mix code and markdown in the same notebook
+- Notebooks are easy to share in GitHub and other platforms
+
+---
+
+## 3. CoderPad
+
+CoderPad is the coding platform used for the challenges in this course. It is built into the LinkedIn Learning course website and keeps the instructions, answer area, and test output in one place.
+
+### How to Use It
+1. Click the challenge to open it
+2. Read the instructions carefully
+3. Write your solution in the answer panel
+4. Run the tests
+5. Check the console output for errors
+
+### Interface Layout
+- Instructions panel: explains the task
+- Answer panel: where you write code
+- Test code panel: shows values used to validate the solution
+- Console output: displays print statements and errors
+
+### Important Reminder
+You are expected to solve the challenge, not just hard-code the answer. The console output helps you debug and understand errors.
+
+### Best Practices
+- Read the problem before coding
+- Review examples and expected output
+- Test small ideas before finalizing
+- Use hints when needed
+- Focus on learning, not just passing
+
+### Key Takeaways
+- CoderPad is used for coding challenges in this course
+- It combines instructions and testing in one environment
+- The console output is important for debugging
+- The goal is to practice problem-solving and improve coding skills
