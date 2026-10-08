@@ -57,5 +57,3 @@ The goal of this exercise is to learn how to:
 - save it,
 - and run it in the terminal.
 ````
-
-If you want, I can also make this into a cleaner GitHub-style `README.md` version instead of `notes.md`.
