@@ -155,3 +155,84 @@ You are expected to solve the challenge, not just hard-code the answer. The cons
 - It combines instructions and testing in one environment
 - The console output is important for debugging
 - The goal is to practice problem-solving and improve coding skills
+
+Append this section to your GitHub notes:
+
+````markdown
+---
+
+# Variables and Types
+
+## Variables
+- A variable is a name that refers to a value.
+- Use `=` to assign a value to a variable:
+
+```python
+x = 5
+name = "Ryan"
+```
+
+- Use `print()` to display a variable’s value. In a Jupyter Notebook, the value of the last expression in a cell is also displayed automatically.
+
+```python
+print(x)
+```
+
+## Variable Naming Rules
+- Names can contain letters, numbers, and underscores.
+- Names cannot start with a number.
+- Names are case-sensitive: `name` and `Name` are different variables.
+- Python convention is to use lowercase names, often with underscores: `first_name`.
+- Avoid spaces and special characters in variable names.
+
+## Common Python Types
+
+| Type | Description | Example |
+|---|---|---|
+| `int` | Whole number | `5` |
+| `float` | Decimal number | `1.5` |
+| `complex` | Complex number; uses `j` for the imaginary part | `2j` |
+| `str` | Text (string) | `"Hello"` |
+| `bool` | Boolean value: true or false | `True`, `False` |
+
+Use `type()` to check a value’s type:
+
+```python
+type(5)       # int
+type(1.5)     # float
+type("Ryan")  # str
+```
+
+## Working with Strings
+- Strings can use single or double quotes.
+- The `+` operator joins strings; this is called concatenation.
+- Joining strings that contain digits still produces text:
+
+```python
+"1" + "1"  # "11"
+```
+
+- A string cannot be directly added to a number. Convert the value to a string first if needed:
+
+```python
+"Age: " + str(5)
+```
+
+## Booleans and Comparisons
+- Boolean values must be capitalized: `True` and `False`.
+- Use `==` to compare values. It returns a Boolean.
+- A single `=` assigns a value; `==` checks whether values are equal.
+
+```python
+x = 5       # Assignment
+x == 5      # Comparison; evaluates to True
+1 == 2      # Evaluates to False
+```
+
+## Key Takeaways
+- Variables store or refer to values.
+- `=` assigns a value, while `==` compares values.
+- Python values have different types, such as `int`, `float`, `str`, and `bool`.
+- Use `type()` to inspect a value’s type.
+- Read error messages carefully; they often explain what needs fixing.
+````
