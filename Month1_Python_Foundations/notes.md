@@ -156,9 +156,6 @@ You are expected to solve the challenge, not just hard-code the answer. The cons
 - The console output is important for debugging
 - The goal is to practice problem-solving and improve coding skills
 
-Append this section to your GitHub notes:
-
-````markdown
 ---
 
 # Variables and Types
