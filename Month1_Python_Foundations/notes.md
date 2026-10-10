@@ -235,6 +235,8 @@ x == 5      # Comparison; evaluates to True
 ````
 
 ````
+
+---
 # Data Structures
 
 Data structures store and organize multiple values. Python’s common built-in structures include lists, sets, tuples, and dictionaries.
@@ -315,4 +317,97 @@ my_dict["apple"] = "a fruit that can also be green"
 - Use a **tuple** for an ordered collection that should remain unchanged.
 - Use a **dictionary** to look up values by key.
 - `len()` returns the number of items in a collection.
+````
+````
+---
+
+# Operators
+
+Operators perform actions on values and variables. They can calculate results, compare values, or check conditions.
+
+## Arithmetic Operators
+
+| Operator | Operation | Example | Result |
+|---|---|---|---|
+| `+` | Addition | `1 + 1` | `2` |
+| `-` | Subtraction | `5 - 2` | `3` |
+| `*` | Multiplication | `3 * 4` | `12` |
+| `/` | Division | `20 / 5` | `4.0` |
+| `**` | Exponentiation | `5 ** 2` | `25` |
+| `%` | Modulus (remainder) | `20 % 6` | `2` |
+
+In Python, `/` returns a float, even when the result is a whole number. The `%` operator is useful for finding remainders.
+
+## String Operators
+
+- `+` joins strings together (concatenation).
+- `*` repeats a string a specified number of times.
+- You cannot directly add a string and a number; convert one type if needed.
+
+```python
+"Hello, " + "Python"  # "Hello, Python"
+"ha" * 3              # "hahaha"
+"Age: " + str(5)      # "Age: 5"
+```
+
+## Comparison Operators
+
+Comparison operators return `True` or `False`.
+
+| Operator | Meaning |
+|---|---|
+| `==` | Equal to |
+| `!=` | Not equal to |
+| `<` | Less than |
+| `<=` | Less than or equal to |
+| `>` | Greater than |
+| `>=` | Greater than or equal to |
+
+```python
+4 < 5    # True
+5 <= 5   # True
+1 == 2   # False
+```
+
+Remember: `=` assigns a value; `==` compares values.
+
+## Logical Operators
+
+Logical operators combine or reverse Boolean values:
+
+- `and` is `True` only when both conditions are true.
+- `or` is `True` when at least one condition is true.
+- `not` reverses a Boolean value.
+
+```python
+True and False  # False
+True or False   # True
+not True        # False
+```
+
+## Membership Operators
+
+Use `in` and `not in` to check whether a value appears in a collection or string.
+
+```python
+2 in [1, 2, 3]           # True
+10 not in [1, 2, 3]      # True
+"cat" in "my pet cat"    # True
+```
+
+For strings, membership checks for a substring, so `"cat" in "catatonic"` is also `True`.
+
+## Identity Operators
+
+- `is` checks whether two references point to the same object.
+- `is not` checks whether they point to different objects.
+- To compare values for equality, use `==`.
+
+## Key Takeaways
+
+- Arithmetic operators perform calculations.
+- `+` and `*` can also join and repeat strings.
+- Comparison, logical, membership, and identity operators produce Boolean results.
+- Pay attention to data types; incompatible operations can raise a `TypeError`.
+- Read error messages to help understand and fix problems.
 ````
