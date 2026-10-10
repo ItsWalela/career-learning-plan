@@ -233,3 +233,86 @@ x == 5      # Comparison; evaluates to True
 - Use `type()` to inspect a value’s type.
 - Read error messages carefully; they often explain what needs fixing.
 ````
+
+````
+# Data Structures
+
+Data structures store and organize multiple values. Python’s common built-in structures include lists, sets, tuples, and dictionaries.
+
+## Lists
+
+- Lists use square brackets: `[]`
+- They are ordered and can be changed after creation.
+- Lists can contain different types of values, including other lists.
+- Use `len()` to get the number of items.
+
+```python
+my_list = [1, "hello", True]
+print(len(my_list))  # 3
+
+my_list.append(4)
+print(my_list)
+```
+
+## Sets
+
+- Sets use curly braces: `{}`.
+- They contain unique values; duplicate values are removed.
+- Sets are unordered, so don’t rely on their display order.
+- Use `set()` to create an empty set; `{}` creates an empty dictionary.
+
+```python
+my_set = {1, 1, 2, 2}
+print(my_set)       # {1, 2}
+print(len(my_set))  # 2
+
+empty_set = set()
+```
+
+## Tuples
+
+- Tuples are ordered and use parentheses: `()`.
+- They cannot be changed after creation.
+- Use a trailing comma for a tuple with one item.
+
+```python
+my_tuple = (1, 2, 3)
+print(len(my_tuple))  # 3
+
+single_item = (1,)
+```
+
+## Dictionaries
+
+- Dictionaries store key-value pairs and use curly braces.
+- Access a value using its key.
+- Keys must be unique. Assigning a value to an existing key replaces its previous value.
+- Modern Python dictionaries preserve insertion order.
+
+```python
+my_dict = {
+    "apple": "a red fruit",
+    "bear": "a large animal"
+}
+
+print(my_dict["apple"])
+my_dict["apple"] = "a fruit that can also be green"
+```
+
+## Quick Comparison
+
+| Structure | Syntax | Ordered? | Can be changed? | Allows duplicates? |
+|---|---|---|---|---|
+| List | `[1, 2]` | Yes | Yes | Yes |
+| Set | `{1, 2}` | No | Yes | No |
+| Tuple | `(1, 2)` | Yes | No | Yes |
+| Dictionary | `{"key": "value"}` | Yes, insertion order | Yes | Keys must be unique |
+
+## Key Takeaways
+
+- Use a **list** for an ordered collection that may change.
+- Use a **set** when you need unique values.
+- Use a **tuple** for an ordered collection that should remain unchanged.
+- Use a **dictionary** to look up values by key.
+- `len()` returns the number of items in a collection.
+````
