@@ -411,3 +411,224 @@ For strings, membership checks for a substring, so `"cat" in "catatonic"` is als
 - Pay attention to data types; incompatible operations can raise a `TypeError`.
 - Read error messages to help understand and fix problems.
 ````
+
+````
+---
+
+# Control Flow
+
+Control flow determines which parts of a program run and how many times they run. Python uses conditionals and loops to control execution.
+
+## `if` and `else`
+
+An `if` statement runs its indented code block when its condition is true. An `else` block runs when the condition is false.
+
+```python
+is_ready = True
+
+if is_ready:
+    print("Ready!")
+else:
+    print("Not ready yet.")
+```
+
+Python uses a colon (`:`) to begin a block. Indentation defines which statements belong to that block.
+
+You can use `elif` to check another condition:
+
+```python
+score = 75
+
+if score >= 90:
+    print("Excellent")
+elif score >= 60:
+    print("Passed")
+else:
+    print("Try again")
+```
+
+## `for` Loops
+
+A `for` loop runs once for each item in an iterable, such as a list.
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+for number in numbers:
+    print(number)
+```
+
+The loop variable (`number` here) refers to the current item during each iteration. You can choose its name.
+
+## `while` Loops
+
+A `while` loop repeats as long as its condition is true. Update the condition inside the loop so it eventually becomes false.
+
+```python
+count = 0
+
+while count < 5:
+    print(count)
+    count += 1
+```
+
+If the condition never becomes false, the loop can run indefinitely. This is called an infinite loop.
+
+## Key Takeaways
+
+- `if`, `elif`, and `else` let a program choose between actions.
+- Indentation is required and determines the structure of Python code blocks.
+- Use a `for` loop to process items in an iterable.
+- Use a `while` loop when repetition depends on a condition.
+- Make sure `while` loops can eventually stop.
+````
+
+
+````
+---
+
+# Functions
+
+A function is a reusable block of code that performs a task. It can accept input values, called **arguments**, and return a result.
+
+## Defining and Calling a Function
+
+Use the `def` keyword to define a function. Indent the function body, and call the function by writing its name followed by parentheses.
+
+```python
+def multiply_by_three(value):
+    return value * 3
+
+result = multiply_by_three(4)
+print(result)  # 12
+```
+
+- `value` is a **parameter**: a name listed in the function definition.
+- `4` is an **argument**: the value passed when calling the function.
+- `return` sends a result back to the code that called the function.
+
+A function can have multiple parameters:
+
+```python
+def multiply(first, second):
+    return first * second
+
+print(multiply(3, 4))  # 12
+```
+
+## Functions Without a Return Value
+
+Some functions perform an action rather than returning a result. For example, a function can modify a mutable object such as a list:
+
+```python
+def append_four(items):
+    items.append(4)
+
+numbers = [1, 2, 3]
+append_four(numbers)
+print(numbers)  # [1, 2, 3, 4]
+```
+
+If a function does not explicitly return a value, Python returns `None` by default. The `print()` function displays output but also returns `None`.
+
+```python
+result = print("Hello")
+print(result)  # None
+```
+
+`None` represents the absence of a value. It has its own type, `NoneType`.
+
+## Naming Functions
+
+- Use descriptive, lowercase names.
+- Separate words with underscores, as in `multiply_by_three`.
+- Function names follow the same basic naming rules as variable names.
+
+## Key Takeaways
+
+- Define functions with `def`.
+- Pass inputs through parameters and arguments.
+- Use `return` to send a result back.
+- Functions can also perform actions without returning a value.
+- A function without a `return` statement returns `None`.
+````
+
+
+````
+---
+
+# Classes and Objects
+
+A **class** is a blueprint for creating objects. It groups related data (attributes) and behavior (methods) together. An **object** is an instance created from a class.
+
+## Defining a Class
+
+Class names conventionally use `PascalCase`. The `__init__` method runs when a new instance is created and initializes its attributes.
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+        self.legs = 4
+
+    def speak(self):
+        print(f"{self.name} says bark!")
+```
+
+- `self` refers to the current instance.
+- `self.name` and `self.legs` are attributes belonging to that instance.
+- `speak()` is a method: a function defined inside a class.
+
+## Creating and Using Objects
+
+Call the class to create an instance, then access its attributes and methods with dot notation.
+
+```python
+my_dog = Dog("Rover")
+another_dog = Dog("Buddy")
+
+print(my_dog.name)  # Rover
+my_dog.speak()      # Rover says bark!
+another_dog.speak() # Buddy says bark!
+```
+
+Each instance has its own attribute values.
+
+## Key Takeaways
+
+- A class describes the data and behavior its objects will have.
+- An object is an instance of a class.
+- `__init__` initializes a new instance.
+- `self` refers to the current instance.
+- Use `PascalCase` for class names and lowercase `snake_case` for methods and variables.
+````
+
+
+````
+---
+
+# About the Challenges
+
+Coding challenges are an opportunity to practice writing programs independently. Feeling stuck at first is normal—watching code and creating it yourself are different skills.
+
+## A Helpful Approach
+
+1. Read the problem carefully and identify what it asks for.
+2. Work through a few examples by hand.
+3. Break the task into smaller steps.
+4. Write a small amount of code, then run and test it.
+5. Read error messages and use them to debug.
+6. Review hints or other learning resources when needed.
+7. Revisit course videos or notebook examples if a concept is unclear.
+
+## Keep Practicing
+
+- Give yourself time; learning to program takes practice.
+- Experiment with code and modify examples.
+- Start with small exercises, such as writing a function that returns `"Hello"`.
+- Focus on understanding the process, not just finishing the challenge.
+
+## Key Takeaway
+
+Challenges are for learning. Working through confusion, testing ideas, and correcting mistakes are all part of building programming skills.
+````
