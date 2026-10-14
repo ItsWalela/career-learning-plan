@@ -632,3 +632,73 @@ Coding challenges are an opportunity to practice writing programs independently.
 
 Challenges are for learning. Working through confusion, testing ideas, and correcting mistakes are all part of building programming skills.
 ````
+
+````
+---
+
+# Factorials
+
+The factorial of a non-negative integer `n`, written `n!`, is the product of all positive integers from `1` through `n`.
+
+```text
+5! = 5 × 4 × 3 × 2 × 1 = 120
+0! = 1
+```
+
+Factorials are undefined for negative integers. In this example, invalid inputs return `None`.
+
+## Iterative Solution
+
+A loop multiplies a running total by each number from `1` through the input.
+
+```python
+def factorial(number):
+    if not isinstance(number, int) or number < 0:
+        return None
+
+    result = 1
+    counter = 1
+
+    while counter <= number:
+        result *= counter
+        counter += 1
+
+    return result
+```
+
+The result starts at `1`, so the loop does not need to run for `0`; the function correctly returns `0! = 1`.
+
+## Recursive Solution
+
+Recursion occurs when a function calls itself. A recursive function needs a **base case** to stop the calls.
+
+```python
+def factorial_recursive(number):
+    if not isinstance(number, int) or number < 0:
+        return None
+
+    if number == 0:
+        return 1
+
+    return number * factorial_recursive(number - 1)
+```
+
+For example:
+
+```text
+factorial_recursive(3)
+= 3 × factorial_recursive(2)
+= 3 × 2 × factorial_recursive(1)
+= 3 × 2 × 1 × factorial_recursive(0)
+= 3 × 2 × 1 × 1
+= 6
+```
+
+## Key Takeaways
+
+- `0!` is `1`.
+- Factorials are only defined for non-negative integers.
+- An iterative solution uses a loop to build the result.
+- A recursive solution calls itself and needs a base case.
+- Recursive calls use additional memory; for very large numbers, an iterative approach avoids recursion-depth limits.
+````
