@@ -702,3 +702,105 @@ factorial_recursive(3)
 - A recursive solution calls itself and needs a base case.
 - Recursive calls use additional memory; for very large numbers, an iterative approach avoids recursion-depth limits.
 ````
+
+
+````
+---
+
+# Integers and Floats
+
+Python’s `int` type represents whole numbers, while `float` represents numbers with a fractional part. Mixing integers and floats in arithmetic usually produces a float. The `/` operator always returns a float.
+
+```python
+20 / 4       # 5.0
+2 + 1.5      # 3.5
+2 * 1.5      # 3.0
+```
+
+## Converting Between Types
+
+Use `int()` and `float()` to convert values. This is often called **casting**.
+
+```python
+int(8.9)     # 8
+float(5)     # 5.0
+```
+
+`int()` does not round; it removes the fractional part, moving toward zero. To round to the nearest value, use `round()`:
+
+```python
+round(4.9)       # 5
+round(4.678, 2)  # 4.68
+```
+
+## Floating-Point Precision
+
+Floats are stored as finite-precision binary approximations. Some decimal values cannot be represented exactly, which can produce results that look unexpected:
+
+```python
+1.2 - 1.0  # May display as 0.19999999999999996
+```
+
+For approximate calculations, rounding the result for display can help:
+
+```python
+round(1.2 - 1.0, 2)  # 0.2
+```
+
+For calculations where exact decimal values matter—such as money—consider Python’s `decimal.Decimal` type instead of relying on floats.
+
+## Key Takeaways
+
+- `/` always returns a float.
+- Mixing `int` and `float` values in arithmetic generally produces a float.
+- `int()` truncates; it does not round.
+- Use `round(value, decimal_places)` when you need rounding.
+- Floats are approximate, so avoid assuming every decimal calculation is exact.
+````
+
+
+````
+---
+
+# Other Types of Numbers
+
+Python’s `int()` can convert numeric strings to integers. It can also parse strings written in another number base.
+
+```python
+int("100")       # 100
+int("100", 2)    # 4: binary 100 is decimal 4
+int("1ab", 16)   # 427: hexadecimal 1ab is decimal 427
+```
+
+When specifying a base, the first argument must be a string. The base must be between 2 and 36.
+
+## The `Decimal` Type
+
+The `decimal` module provides `Decimal` for decimal arithmetic where exact decimal representation matters, such as financial calculations.
+
+```python
+from decimal import Decimal, getcontext
+
+price = Decimal("3.14")
+total = Decimal("1.20") + Decimal("1.00")
+print(total)  # 2.20
+```
+
+Create `Decimal` values from strings to avoid carrying inexact float representations. For example, `Decimal(3.14)` captures the approximation already present in the float; prefer `Decimal("3.14")`.
+
+You can set the decimal context’s precision with `getcontext().prec`. Precision is the number of significant digits used in calculations, not the number of digits after the decimal point.
+
+```python
+getcontext().prec = 4
+
+result = Decimal(1) / Decimal(3)
+print(result)  # 0.3333
+```
+
+## Choosing a Number Type
+
+- Use `int` for whole numbers.
+- Use `float` for most general-purpose decimal calculations.
+- Use `Decimal` when exact base-10 decimal arithmetic is important.
+- Round values appropriately when displaying them to users.
+````
