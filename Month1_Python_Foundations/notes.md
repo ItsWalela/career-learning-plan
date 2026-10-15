@@ -804,3 +804,273 @@ print(result)  # 0.3333
 - Use `Decimal` when exact base-10 decimal arithmetic is important.
 - Round values appropriately when displaying them to users.
 ````
+
+````
+---
+
+# Booleans
+
+Booleans have two values: `True` and `False`. Python also treats other values as truthy or falsy when evaluating conditions.
+
+## Truthy and Falsy Values
+
+Common falsy values include:
+
+- `False`
+- Numeric zero, such as `0`, `0.0`, and `0j`
+- Empty strings and collections, such as `""`, `[]`, `{}`, and `()`
+- `None`
+
+Most other values are truthy. For example, `-1` and the string `"False"` are truthy. A string is falsy only when it is empty; even `" "` is truthy.
+
+Use `bool()` to check a value’s truthiness:
+
+```python
+bool(0)       # False
+bool(-1)      # True
+bool("")      # False
+bool("False") # True
+bool([])      # False
+```
+
+Conditions use these same rules:
+
+```python
+items = [1, 2]
+
+if items:
+    print("The list has items")
+```
+
+## Writing Clear Boolean Logic
+
+Use `and`, `or`, and `not` to combine conditions. Parentheses can make the intended logic easier to read.
+
+```python
+weather_is_nice = False
+have_umbrella = True
+
+if have_umbrella or weather_is_nice:
+    print("Go for a walk")
+else:
+    print("Stay inside")
+```
+
+For the equivalent “stay inside” condition, both conditions must be false:
+
+```python
+if not have_umbrella and not weather_is_nice:
+    print("Stay inside")
+```
+
+This follows De Morgan’s law:
+
+```python
+not (have_umbrella or weather_is_nice)
+# equivalent to:
+(not have_umbrella) and (not weather_is_nice)
+```
+
+## Key Takeaways
+
+- Empty values and numeric zero are falsy; most other values are truthy.
+- The string `"False"` is truthy because it is not empty.
+- Python evaluates `not` before `and`, and `and` before `or`.
+- Use parentheses when they make complex conditions clearer.
+- Test Boolean logic with different combinations of inputs.
+````
+
+````
+---
+
+# Strings
+
+Strings store text. Python provides tools to access parts of a string, format output, and work with multiline text.
+
+## Indexing and Slicing
+
+String indexes start at `0`. Use square brackets to access a character or slice:
+
+```python
+name = "My name is Ryan Mitchell"
+
+name[0]      # "M"
+name[1]      # "y"
+name[0:7]    # "My name"
+name[11:]    # "Ryan Mitchell"
+name[:7]     # "My name"
+```
+
+A slice includes the start index but excludes the stop index. Leaving out the start or stop uses the beginning or end of the string. Slicing works similarly with lists.
+
+Use `len()` to get the number of characters in a string, or the number of items in a list:
+
+```python
+len(name)
+```
+
+## Formatting Strings
+
+F-strings are a readable way to insert variables and expressions into text. Put `f` before the opening quote and expressions inside `{}`.
+
+```python
+number = 5
+
+f"My number is {number}"
+f"Twice that is {number * 2}"
+```
+
+You can format numbers inside the braces. For example, `:.2f` displays a number with two digits after the decimal point:
+
+```python
+import math
+
+f"Pi is {math.pi:.2f}"  # "Pi is 3.14"
+```
+
+The older `str.format()` method is another option:
+
+```python
+"Pi is {:.2f}".format(math.pi)
+```
+
+## Multiline Strings
+
+Triple quotes allow strings to span multiple lines. Newlines inside the string are preserved.
+
+```python
+message = """This is a
+multiline string."""
+print(message)
+```
+
+Use a backslash (`\`) to escape a character when needed, such as including a quote that would otherwise end the string.
+
+## Key Takeaways
+
+- Strings use zero-based indexes.
+- Slices include the start and exclude the stop.
+- Use f-strings to insert values and format output.
+- Triple quotes support multiline strings.
+- `len()` returns the length of a string or collection.
+````
+
+````
+---
+
+# Bytes
+
+A `bytes` object is an immutable sequence of byte values. Each byte contains 8 bits and can represent a value from `0` to `255`. Bytes are commonly used for file data and network communication.
+
+## Creating Bytes
+
+Calling `bytes()` with an integer creates that many zero-valued bytes—not a byte containing that integer.
+
+```python
+empty_data = bytes(4)
+print(empty_data)  # b'\x00\x00\x00\x00'
+```
+
+To convert text into bytes, encode it using a character encoding such as UTF-8:
+
+```python
+text = "🙂"
+data = text.encode("utf-8")
+print(data)  # UTF-8 bytes
+```
+
+The `b` prefix in a displayed value indicates that it is a bytes object.
+
+## Decoding Bytes
+
+To convert bytes back to text, decode them using the same encoding:
+
+```python
+decoded_text = data.decode("utf-8")
+print(decoded_text)  # 🙂
+```
+
+The encoding must match the data. Decoding with the wrong encoding, or with invalid byte sequences, can raise an error.
+
+## Mutable Bytes: `bytearray`
+
+`bytes` objects cannot be changed after creation. Use `bytearray` when you need mutable byte data:
+
+```python
+mutable_data = bytearray(data)
+mutable_data[0] = 0xF1
+```
+
+Each `bytearray` element must be an integer from `0` through `255`. Changing bytes that represent encoded text may make the sequence invalid for that encoding.
+
+## Key Takeaways
+
+- `bytes` stores immutable binary data; `bytearray` is mutable.
+- Use `.encode("utf-8")` to convert text to bytes.
+- Use `.decode("utf-8")` to convert UTF-8 bytes back to text.
+- `bytes(n)` creates `n` zero-valued bytes.
+````
+
+
+````
+---
+
+# Solution: Converting Hex to Decimal
+
+Hexadecimal (base 16) uses digits `0–9` and letters `a–f`, where `a` through `f` represent values `10` through `15`.
+
+Each digit’s value depends on its position. For example:
+
+```text
+1ab₁₆ = 1 × 16² + 10 × 16¹ + 11 × 16⁰ = 427₁₀
+```
+
+## Using Python’s Built-in Conversion
+
+Python can convert a hexadecimal string directly to a decimal integer:
+
+```python
+int("1ab", 16)  # 427
+```
+
+## Converting Manually
+
+To handle any length, process digits from left to right. For each digit, multiply the current total by `16`, then add the digit’s value.
+
+```python
+HEX_VALUES = {
+    "0": 0, "1": 1, "2": 2, "3": 3,
+    "4": 4, "5": 5, "6": 6, "7": 7,
+    "8": 8, "9": 9, "a": 10, "b": 11,
+    "c": 12, "d": 13, "e": 14, "f": 15,
+}
+
+def hex_to_decimal(hex_num):
+    if not isinstance(hex_num, str) or not hex_num:
+        return None
+
+    converted = 0
+
+    for char in hex_num.lower():
+        if char not in HEX_VALUES:
+            return None
+        converted = converted * 16 + HEX_VALUES[char]
+
+    return converted
+```
+
+For `"1ab"`, the running total is:
+
+```text
+0 × 16 + 1 = 1
+1 × 16 + 10 = 26
+26 × 16 + 11 = 427
+```
+
+## Key Takeaways
+
+- Hexadecimal is base 16; each position represents a power of `16`.
+- `int(value, 16)` is Python’s built-in way to convert hexadecimal strings.
+- When implementing the conversion yourself, validate each character.
+- Start with simpler cases, identify the pattern, then generalize to strings of any length.
+````
