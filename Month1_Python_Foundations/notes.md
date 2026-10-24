@@ -1074,3 +1074,879 @@ For `"1ab"`, the running total is:
 - When implementing the conversion yourself, validate each character.
 - Start with simpler cases, identify the pattern, then generalize to strings of any length.
 ````
+
+````
+---
+
+# Lists
+
+Lists are ordered, mutable collections. Like strings, they support indexing, slicing, and `len()`.
+
+## Slicing
+
+The general syntax is `list[start:stop:step]`. The start is included; the stop is excluded.
+
+```python
+numbers = [1, 2, 3, 4, 5]
+
+numbers[2:]       # [3, 4, 5]
+numbers[::2]      # [1, 3, 5]
+numbers[::-1]     # [5, 4, 3, 2, 1]
+len(numbers)      # 5
+```
+
+Leaving out the start or stop uses the beginning or end of the list. A negative step moves through the list in reverse.
+
+## Creating Sequences with `range()`
+
+`range()` represents an ordered sequence of integers, commonly used in loops. Convert it to a list to see or store all its values.
+
+```python
+for number in range(5):
+    print(number)  # 0 through 4
+
+numbers = list(range(10))
+```
+
+## Modifying Lists
+
+Lists are mutable, so methods can add or remove items:
+
+```python
+numbers = [1, 2, 3]
+
+numbers.append(4)       # Add to the end
+numbers.insert(1, 10)   # Insert at index 1
+numbers.remove(10)      # Remove the first matching value
+last_item = numbers.pop()  # Remove and return the last item
+```
+
+`remove()` raises a `ValueError` if the value is not present. `pop()` removes the last item by default, or an item at a specified index.
+
+## Aliasing and Copying
+
+Assigning one list variable to another does not copy the list; both variables refer to the same object. Use `.copy()` for a separate, shallow copy.
+
+```python
+original = [1, 2, 3]
+alias = original
+copy = original.copy()
+
+original.append(4)
+
+print(alias)  # [1, 2, 3, 4]
+print(copy)   # [1, 2, 3]
+```
+
+## Key Takeaways
+
+- Lists are ordered and mutable.
+- Slicing uses `[start:stop:step]`; the stop index is excluded.
+- `range()` is useful for generating integer sequences.
+- Use `append()`, `insert()`, `remove()`, and `pop()` to modify lists.
+- Assignment creates another reference; `.copy()` creates a shallow copy.
+````
+
+````
+---
+
+# Tuples and Sets
+
+## Sets
+
+A set is a mutable collection of unique, hashable values. Sets do not support indexing or slicing, and their iteration order is not guaranteed.
+
+```python
+letters = {"a", "b", "c"}
+also_letters = set(("a", "b", "c"))
+```
+
+Use `set()` to create an empty set; `{}` creates an empty dictionary.
+
+Sets are useful for removing duplicates, but converting a list to a set may change its order:
+
+```python
+values = ["a", "b", "b", "c"]
+unique_values = set(values)
+```
+
+Add items with `.add()`. Check membership with `in`. Use `.discard()` to remove an item without an error if it is missing; `.remove()` raises a `KeyError` if it is missing. `.pop()` removes and returns an arbitrary item.
+
+```python
+letters.add("d")
+"a" in letters  # True
+letters.discard("z")
+```
+
+## Tuples
+
+A tuple is an ordered, immutable sequence. It supports indexing and slicing, but you cannot add, remove, or reassign its elements.
+
+```python
+coordinates = (10, 20, 30)
+coordinates[0]  # 10
+```
+
+Commas create tuples; parentheses are usually added for clarity. A one-item tuple needs a trailing comma:
+
+```python
+single_item = ("a",)
+```
+
+Functions that return multiple comma-separated values return a tuple. You can unpack those values into variables:
+
+```python
+def get_values():
+    return 1, 2, 3
+
+a, b, c = get_values()
+```
+
+## Key Takeaways
+
+- Sets contain unique values and do not support indexing.
+- Use sets for membership checks and removing duplicates when order is unimportant.
+- Tuples are ordered and immutable.
+- Tuple unpacking assigns sequence values to multiple variables.
+````
+
+````
+---
+
+# Dictionaries
+
+A dictionary (`dict`) stores key-value pairs. Use keys to look up, add, or update values. Keys must be unique and hashable; values can be any type. A trailing comma after the final pair is optional but commonly used.
+
+```python
+animals = {
+    "a": "aardvark",
+    "b": "bear",
+}
+
+animals["a"]          # "aardvark"
+animals["d"] = "dog"  # Add a key-value pair
+animals["a"] = "antelope"  # Update a value
+```
+
+Accessing a missing key with square brackets raises a `KeyError`. Use `.get()` to provide a default instead:
+
+```python
+animals.get("e")             # None if "e" is missing
+animals.get("e", "elephant")  # "elephant" if "e" is missing
+```
+
+Use `in` to check whether a key exists, and `len()` to count the pairs:
+
+```python
+"a" in animals
+len(animals)
+```
+
+## Keys, Values, and Items
+
+`.keys()`, `.values()`, and `.items()` return dictionary views. These are iterable and reflect changes to the dictionary. Convert a view to a list if you need a list:
+
+```python
+list(animals.keys())
+list(animals.values())
+list(animals.items())  # List of (key, value) pairs
+```
+
+## Dictionaries of Lists
+
+A dictionary can map keys to lists. Check whether a key exists before creating its list:
+
+```python
+animals_by_letter = {"b": ["bear"]}
+
+if "c" not in animals_by_letter:
+    animals_by_letter["c"] = []
+
+animals_by_letter["c"].append("cat")
+```
+
+For this pattern, `collections.defaultdict` can create a default list automatically:
+
+```python
+from collections import defaultdict
+
+animals_by_letter = defaultdict(list)
+animals_by_letter["e"].append("elephant")
+animals_by_letter["e"].append("emu")
+```
+
+Pass the `list` type—not `list()`—so a new list is created whenever a missing key is accessed.
+
+## Key Takeaways
+
+- Dictionaries map unique keys to values.
+- Use `dictionary[key]` to access a value, or `.get()` when a key might be missing.
+- Assigning to a key adds it if it is new or updates it if it already exists.
+- Dictionary views provide iterable access to keys, values, or key-value pairs.
+- `defaultdict(list)` is useful for collecting multiple values under each key.
+````
+
+````
+---
+
+# List Comprehensions
+
+A list comprehension builds a new list by transforming or filtering items from an iterable. Its basic form is:
+
+```python
+[expression for item in iterable]
+```
+
+For example, double each number in a list:
+
+```python
+numbers = [1, 2, 3, 4, 5]
+doubled = [number * 2 for number in numbers]
+# [2, 4, 6, 8, 10]
+```
+
+## Filtering Items
+
+Add an `if` condition after the `for` clause to include only items that meet a condition:
+
+```python
+numbers = list(range(100))
+multiples_of_ten = [number for number in numbers if number % 10 == 0]
+# [0, 10, 20, ..., 90]
+```
+
+## Processing Strings
+
+`str.split()` separates a string into a list. With no argument, it splits on whitespace; pass a separator to split on something specific.
+
+```python
+text = "My name is Ryan Mitchell. I live in Boston."
+words = text.split()
+sentences = text.split(".")
+```
+
+You can clean each word as you build a list:
+
+```python
+def clean_word(word):
+    return word.replace(".", "").lower()
+
+cleaned_words = [clean_word(word) for word in text.split()]
+short_words = [
+    clean_word(word)
+    for word in text.split()
+    if len(clean_word(word)) < 3
+]
+```
+
+## Nested List Comprehensions
+
+A comprehension can be nested to create a list of lists—for example, grouping cleaned words by sentence:
+
+```python
+sentences = text.split(".")
+words_by_sentence = [
+    [clean_word(word) for word in sentence.split()]
+    for sentence in sentences
+]
+```
+
+Nested comprehensions can become difficult to read. Use regular loops when they make the logic clearer.
+
+## Key Takeaways
+
+- Use `[expression for item in iterable]` to transform items.
+- Add `if condition` to filter items.
+- `split()` turns a string into a list of parts.
+- Nested comprehensions can build nested lists, but readability matters.
+````
+
+````
+---
+
+# Dictionary Comprehensions
+
+A dictionary comprehension creates a dictionary from an iterable. Its basic form is:
+
+```python
+{key_expression: value_expression for item in iterable}
+```
+
+For example, create a dictionary from a list of key-value tuples:
+
+```python
+animal_list = [("a", "aardvark"), ("b", "bear"), ("c", "cat")]
+
+animals = {item[0]: item[1] for item in animal_list}
+```
+
+Because each tuple has two values, you can unpack them directly in the comprehension:
+
+```python
+animals = {key: value for key, value in animal_list}
+```
+
+The number of variables used for unpacking must match the number of values in each tuple.
+
+## Working with Dictionary Items
+
+The `.items()` method returns an iterable view of a dictionary’s key-value pairs. Convert it to a list if needed:
+
+```python
+pairs = list(animals.items())
+```
+
+You can also use `.items()` to transform a dictionary into a list of dictionaries:
+
+```python
+animal_records = [
+    {"letter": key, "name": value}
+    for key, value in animals.items()
+]
+```
+
+## Key Takeaways
+
+- Dictionary comprehensions use `{key: value for item in iterable}`.
+- Unpack tuples in the `for` clause when it improves readability.
+- `.items()` provides iterable key-value pairs.
+- Comprehensions can transform data into a different structure.
+````
+
+````
+---
+
+# Solution: Encoding ASCII Art
+
+Run-length encoding represents consecutive repeated characters as `(character, count)` pairs. For example, `"aaabb"` becomes `[("a", 3), ("b", 2)]`. This can compact strings with repeated characters, such as ASCII art.
+
+## Encoding
+
+Track the current character and how many times it appears consecutively. When the character changes, save the previous run and start counting the new one.
+
+```python
+def encode_string(text):
+    if not text:
+        return []
+
+    encoded = []
+    previous = text[0]
+    count = 0
+
+    for char in text:
+        if char != previous:
+            encoded.append((previous, count))
+            previous = char
+            count = 0
+
+        count += 1
+
+    encoded.append((previous, count))
+    return encoded
+```
+
+The final append is needed because the last run has no following character to signal a change.
+
+## Decoding
+
+For each pair, repeat the character by its count and join the results:
+
+```python
+def decode_string(encoded):
+    return "".join(char * count for char, count in encoded)
+```
+
+## Example
+
+```python
+original = "aaabbcccc"
+encoded = encode_string(original)
+decoded = decode_string(encoded)
+
+print(encoded)  # [('a', 3), ('b', 2), ('c', 4)]
+print(decoded)  # aaabbcccc
+```
+
+## Key Takeaways
+
+- Run-length encoding stores consecutive runs as `(character, count)` pairs.
+- Remember to save the final run after the loop.
+- Decoding repeats each character by its count and joins the pieces.
+- Test both a larger input and small cases, including an empty string and a single repeated character.
+````
+
+````
+---
+
+# If and Else
+
+Conditional statements run code depending on whether a Boolean condition is true.
+
+```python
+if condition:
+    # Runs when condition is true
+elif another_condition:
+    # Runs when the first condition is false
+    # and this condition is true
+else:
+    # Runs if no preceding condition is true
+```
+
+A conditional block has one `if`, may have multiple `elif` branches, and may end with one optional `else`.
+
+## Example: FizzBuzz
+
+Check divisibility by `15` before checking `3` or `5`, since multiples of `15` also match those conditions.
+
+```python
+for number in range(1, 101):
+    if number % 15 == 0:
+        print("FizzBuzz")
+    elif number % 3 == 0:
+        print("Fizz")
+    elif number % 5 == 0:
+        print("Buzz")
+    else:
+        print(number)
+```
+
+A new `if` starts a separate conditional block; it does not continue the preceding `if`/`elif`/`else` chain.
+
+## Conditional Expressions
+
+For a simple choice between two values, Python supports a one-line conditional expression:
+
+```python
+number = 3
+result = "Fizz" if number % 3 == 0 else number
+```
+
+Its general form is:
+
+```python
+value_if_true if condition else value_if_false
+```
+
+You can chain conditional expressions, but long chains can be hard to read. Prefer regular `if`/`elif`/`else` blocks when there are several cases.
+
+## Key Takeaways
+
+- Use `if` for the first condition, optional `elif` branches for alternatives, and an optional final `else`.
+- Conditions are checked in order; the first true branch runs.
+- Use `%` to check for a remainder, such as divisibility.
+- Conditional expressions are useful for short, simple choices.
+````
+
+````
+---
+
+# While Loops
+
+A `while` loop repeats its body as long as its condition is true. Make sure the condition can eventually become false, or the loop may run indefinitely.
+
+```python
+count = 0
+
+while count < 3:
+    print(count)
+    count += 1
+```
+
+## Loop Control Statements
+
+- `break` exits the innermost loop immediately.
+- `continue` skips the rest of the current iteration and starts the next one.
+- `pass` does nothing; it can serve as a placeholder where Python requires a statement.
+
+```python
+while True:
+    command = input("Enter a command (or 'quit'): ")
+
+    if command == "quit":
+        break
+
+    if not command:
+        continue
+
+    print(f"You entered: {command}")
+```
+
+## Waiting Until a Time
+
+A loop that repeatedly checks the clock can waste CPU time. Use `time.sleep()` between checks. A deadline based on `datetime` also handles minute and hour changes correctly.
+
+```python
+from datetime import datetime, timedelta
+from time import sleep
+
+deadline = datetime.now() + timedelta(seconds=2)
+
+while datetime.now() < deadline:
+    sleep(0.1)
+
+print("Two seconds have passed.")
+```
+
+## Key Takeaways
+
+- Use `while` when repetition depends on a condition rather than a fixed number of iterations.
+- Update the condition’s state so the loop can finish.
+- `break` exits a loop; `continue` skips to its next iteration; `pass` is a no-op.
+- Avoid busy-waiting when waiting for time or another event.
+````
+
+````
+---
+
+# For Loops
+
+A `for` loop iterates over the items in an iterable, such as a list, string, dictionary, or `range`.
+
+```python
+numbers = [1, 2, 3, 4]
+
+for number in numbers:
+    print(number)
+```
+
+You can unpack items while iterating over key-value pairs:
+
+```python
+animal_lookup = {"a": "aardvark", "b": "bear"}
+
+for letter, animal in animal_lookup.items():
+    print(letter, animal)
+```
+
+## Loop Control
+
+- `pass` does nothing; use it as a placeholder.
+- `continue` skips the rest of the current iteration.
+- `break` exits the innermost loop.
+
+```python
+for number in range(10):
+    if number == 2:
+        continue
+    if number == 5:
+        break
+    print(number)  # Prints 0, 1, 3, 4
+```
+
+## The `for`-`else` Pattern
+
+A loop’s `else` block runs only if the loop finishes without encountering `break`. This is useful for searching: break when you find a match; otherwise, handle the “not found” case in `else`.
+
+For example, test which numbers below 100 are prime:
+
+```python
+for number in range(2, 100):
+    for factor in range(2, int(number ** 0.5) + 1):
+        if number % factor == 0:
+            break
+    else:
+        print(number, "is prime")
+```
+
+The inner `else` belongs to the `for factor` loop. It runs when no factor was found and the loop did not break. The square-root limit is sufficient because any composite number has a factor no greater than its square root.
+
+## Key Takeaways
+
+- Use `for` to iterate over an iterable.
+- `break`, `continue`, and `pass` work in both `for` and `while` loops.
+- A loop’s `else` runs if the loop completes without `break`.
+- `range(start, stop)` includes `start` but excludes `stop`.
+````
+
+````
+---
+
+# Solution: Finding Primes Faster
+
+To find primes more efficiently, keep a list of primes found so far and use those as possible factors for each new candidate. You only need to test factors up to the candidate’s square root: if a number has a larger factor, it must also have a smaller factor.
+
+```python
+def primes_below(limit):
+    primes = []
+
+    for candidate in range(2, limit):
+        is_prime = True
+
+        for factor in primes:
+            if factor * factor > candidate:
+                break
+            if candidate % factor == 0:
+                is_prime = False
+                break
+
+        if is_prime:
+            primes.append(candidate)
+
+    return primes
+```
+
+The function returns primes less than `limit`. For each candidate, it checks only previously found primes and stops once their squares exceed the candidate.
+
+## Key Takeaways
+
+- Reuse known primes as candidate factors instead of checking every number.
+- Factors only need to be checked up to the square root.
+- Optimize when it meaningfully improves performance, while keeping the code readable.
+````
+
+````
+---
+
+# The Anatomy of a Function
+
+A function groups reusable behavior. Define one with `def`, give it parameters, and use `return` to send a result back to the caller.
+
+```python
+def perform_operation(num1, num2, operation="sum"):
+    if operation == "sum":
+        return num1 + num2
+    elif operation == "multiply":
+        return num1 * num2
+    else:
+        raise ValueError(f"Unknown operation: {operation}")
+
+result = perform_operation(2, 3)  # Uses the default: sum
+product = perform_operation(2, 3, operation="multiply")
+```
+
+## Arguments and Parameters
+
+- **Parameters** are names in the function definition.
+- **Arguments** are values passed when calling the function.
+- Positional arguments are assigned by order.
+- Keyword arguments are assigned by name and can make calls clearer.
+- Parameters with default values are optional. They must follow required parameters.
+
+```python
+def greet(name, message="Hello"):
+    print(f"{message}, {name}!")
+
+greet("Ava")
+greet("Ava", message="Welcome")
+```
+
+## Variable-Length Arguments
+
+Use `*args` to collect extra positional arguments into a tuple, and `**kwargs` to collect extra keyword arguments into a dictionary.
+
+```python
+def show_arguments(*args, **kwargs):
+    print(args)
+    print(kwargs)
+
+show_arguments(1, 2, name="Ava")
+# args: (1, 2)
+# kwargs: {"name": "Ava"}
+```
+
+These names are conventions; the `*` and `**` provide the behavior.
+
+## Returning Results
+
+`return` ends the function and sends a value back. A function without a `return` statement returns `None`.
+
+```python
+def perform_operation(*args, operation="sum"):
+    if operation == "sum":
+        return sum(args)
+    elif operation == "multiply":
+        from math import prod
+        return prod(args)
+    else:
+        raise ValueError(f"Unknown operation: {operation}")
+
+perform_operation(1, 2, 3)                       # 6
+perform_operation(2, 3, 4, operation="multiply") # 24
+```
+
+`sum()` is a built-in function; `math.sum()` does not exist. `math.prod()` multiplies the items in an iterable.
+
+## Key Takeaways
+
+- Functions are defined with `def` and may return values with `return`.
+- Defaults make parameters optional; keyword arguments identify values by name.
+- `*args` collects extra positional arguments into a tuple.
+- `**kwargs` collects extra keyword arguments into a dictionary.
+- Keep functions readable and validate unsupported inputs when appropriate.
+````
+
+````
+---
+
+# Variables and Scope
+
+A variable’s **scope** determines where it can be accessed. Variables defined inside a function are local to that function; variables defined at module level are global.
+
+```python
+message = "Global value"
+
+def greet():
+    name = "Ava"  # Local to greet
+    print(message)  # Reads the global variable
+    print(name)
+
+greet()
+```
+
+Python looks up names using the LEGB order: **Local**, **Enclosing**, **Global**, then **Built-in**. A function can read a global variable, but assigning to a name inside a function makes it local by default.
+
+```python
+count = 0
+
+def update():
+    global count
+    count += 1
+```
+
+Use `global` sparingly; passing values into a function and returning results is usually easier to understand.
+
+## Inspecting Names
+
+`locals()` returns a dictionary of names available in the current local scope. `globals()` returns the module’s global namespace dictionary. These are useful for inspection, but generally shouldn’t replace explicit variables or parameters.
+
+```python
+def show_values(value):
+    extra = "local"
+    print(locals())
+
+show_values(42)
+```
+
+A function defined inside another function is local to its enclosing function and can access names from that enclosing scope.
+
+```python
+def outer():
+    message = "Enclosing value"
+
+    def inner():
+        print(message)
+
+    inner()
+```
+
+## Key Takeaways
+
+- Function parameters and variables assigned inside a function are local by default.
+- Functions can read names from enclosing and global scopes.
+- `global` allows a function to reassign a module-level name; use it cautiously.
+- `locals()` and `globals()` expose scope dictionaries for inspection.
+- Inner functions can access variables in their enclosing function.
+````
+
+````
+---
+
+# Functions as Variables
+
+In Python, functions are objects. You can assign them to variables, store them in collections, pass them to other functions, and call them later.
+
+## Store Functions in a List
+
+A list of functions can represent a sequence of operations. Call each function in turn to transform some data:
+
+```python
+def strip_text(text):
+    return text.strip()
+
+def lowercase(text):
+    return text.lower()
+
+operations = [strip_text, lowercase]
+
+text = "  Hello, Python!  "
+for operation in operations:
+    text = operation(text)
+
+print(text)  # hello, python!
+```
+
+This pattern makes it easy to change or reorder processing steps.
+
+## Lambda Functions
+
+A `lambda` creates a small anonymous function containing a single expression. The expression’s value is returned automatically.
+
+```python
+add_three = lambda value: value + 3
+print(add_three(5))  # 8
+```
+
+Lambdas are often useful when a function is needed briefly as an argument. For example, `sorted()` accepts a `key` function that determines what value to sort by:
+
+```python
+records = [
+    {"number": 3},
+    {"number": 1},
+    {"number": 2},
+]
+
+sorted_records = sorted(records, key=lambda record: record["number"])
+```
+
+Use a regular `def` function instead when the logic needs multiple statements or a descriptive reusable name.
+
+## Key Takeaways
+
+- Functions can be stored, passed as arguments, and called through variables.
+- Lists of functions can define configurable processing steps.
+- `lambda` is for short, single-expression functions.
+- Functions such as `sorted()` can accept another function as an argument.
+- Function internals such as `__code__` are generally for specialized inspection, not everyday use.
+````
+
+````
+---
+
+# Solution: Sum of Triangles
+
+The *nth triangular number* is the sum of integers from 1 through `n`. Two consecutive triangular numbers add up to a square:
+
+```text
+n² = triangle(n) + triangle(n - 1)
+```
+
+For example, `4² = 10 + 6 = 16`.
+
+## Recursive Implementation
+
+A triangular number can be defined recursively: add `n` to the previous triangular number. The base case stops the recursion.
+
+```python
+def triangle(n):
+    if n <= 0:
+        return 0
+    return n + triangle(n - 1)
+
+def square_from_triangles(n):
+    return triangle(n) + triangle(n - 1)
+
+print(square_from_triangles(4))  # 16
+```
+
+Each recursive function needs a base case; otherwise, it keeps calling itself. Recursion is useful for expressing problems this way, though an iterative approach may be preferable for large inputs because Python limits recursion depth.
+
+## Related Pattern: Factorial
+
+The same recursive structure can calculate a factorial:
+
+```python
+def factorial(n):
+    if n <= 1:
+        return 1
+    return n * factorial(n - 1)
+```
+
+The key difference is the operation: triangular numbers add each step, while factorials multiply.
+
+## Key Takeaways
+
+- A triangular number is the sum `1 + 2 + ... + n`.
+- Two consecutive triangular numbers sum to `n²`.
+- Recursive functions need a base case and a step that moves toward it.
+- Similar recursive structures can solve different problems by changing the operation and base case.
+````
