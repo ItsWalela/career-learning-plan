@@ -1,4 +1,4 @@
-# Python Essential Training Notes
+<img width="132" height="2268" alt="image" src="https://github.com/user-attachments/assets/3f2ae188-5736-45e3-8c61-21c43e2913cb" /># Python Essential Training Notes
 
 ## 1. First Python Program
 
@@ -1950,3 +1950,879 @@ The key difference is the operation: triangular numbers add each step, while fac
 - Recursive functions need a base case and a step that moves toward it.
 - Similar recursive structures can solve different problems by changing the operation and base case.
 ````
+````
+# The Anatomy of a Class
+
+## Overview
+A **class** is a blueprint for creating objects. It defines the data (attributes) and behavior (methods) that objects created from it will have.
+
+---
+
+## Key Concepts
+
+### 1. Instance Attributes
+Instance attributes belong to individual objects (instances) of a class.
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+        self.legs = 4
+```
+
+```python
+my_dog = Dog("Rover")
+
+print(my_dog.name)  # Rover
+print(my_dog.legs)  # 4
+```
+
+### Notes
+- `name` and `legs` are **instance attributes**.
+- Every Dog object gets its own copy of these attributes.
+- Accessed using dot notation (`object.attribute`).
+
+---
+
+### 2. Class Attributes (Static Variables)
+Some values belong to the class itself rather than individual objects.
+
+```python
+class Dog:
+    legs = 4
+
+    def __init__(self, name):
+        self.name = name
+```
+
+```python
+print(Dog.legs)  # 4
+```
+
+### Notes
+- Shared by all instances of the class.
+- Accessible directly through the class name.
+- Often used for constants or common values.
+
+---
+
+## Instance Attribute vs Class Attribute
+
+| Feature | Instance Attribute | Class Attribute |
+|----------|-------------------|----------------|
+| Belongs to | Object | Class |
+| Shared? | No | Yes |
+| Defined in | `__init__()` | Class body |
+| Accessed by | `self.attribute` | `ClassName.attribute` |
+
+Example:
+
+```python
+class Dog:
+    legs = 4
+
+    def __init__(self, name):
+        self.name = name
+```
+
+```python
+dog1 = Dog("Rover")
+dog2 = Dog("Buddy")
+
+print(dog1.legs)
+print(dog2.legs)
+print(Dog.legs)
+```
+
+Output:
+
+```python
+4
+4
+4
+```
+
+---
+
+## Modifying Class Attributes
+
+Class attributes can still be changed.
+
+```python
+Dog.legs = 3
+```
+
+Now every new Dog instance will use the updated value.
+
+```python
+new_dog = Dog("Max")
+print(new_dog.legs)  # 3
+```
+
+### Important
+Class attributes are not truly constant.
+They can be modified unless protected by convention.
+
+---
+
+## The Underscore Convention
+
+Python uses a leading underscore to indicate a variable should be treated as internal/private.
+
+```python
+class Dog:
+    _legs = 4
+```
+
+### What it Means
+- It is a warning, not enforcement.
+- Other programmers should avoid modifying it directly.
+- Signals: "Use at your own risk."
+
+```python
+print(Dog._legs)
+```
+
+This still works because Python does not strictly enforce privacy.
+
+---
+
+## Getter Methods
+
+A getter method provides controlled access to an attribute.
+
+```python
+class Dog:
+    _legs = 4
+
+    def get_legs(self):
+        return self._legs
+```
+
+Usage:
+
+```python
+my_dog = Dog()
+
+print(my_dog.get_legs())
+```
+
+Output:
+
+```python
+4
+```
+
+### Benefits
+- Hides implementation details.
+- Allows future changes without affecting users of the class.
+- Encourages encapsulation.
+
+---
+
+## Understanding `self`
+
+`self` refers to the current object instance.
+
+```python
+class Dog:
+    def __init__(self, name):
+        self.name = name
+```
+
+When creating an object:
+
+```python
+my_dog = Dog("Rover")
+```
+
+Python automatically does:
+
+```python
+Dog.__init__(my_dog, "Rover")
+```
+
+### Key Idea
+`self` is automatically passed as the first argument when calling instance methods.
+
+---
+
+## Why Methods Usually Need `self`
+
+```python
+class Dog:
+    def bark(self):
+        print("Woof!")
+```
+
+Usage:
+
+```python
+my_dog.bark()
+```
+
+Python internally executes:
+
+```python
+Dog.bark(my_dog)
+```
+
+Without `self`, Python would raise an error because one argument is automatically passed.
+
+---
+
+## Class Scope Rules
+
+Python searches for attributes in this order:
+
+1. Instance attributes
+2. Class attributes
+3. Parent classes (if inheritance exists)
+
+Example:
+
+```python
+class Dog:
+    legs = 4
+
+dog = Dog()
+
+print(dog.legs)
+```
+
+Python finds:
+- No instance attribute called `legs`
+- Uses class attribute `legs`
+
+Output:
+
+```python
+4
+```
+
+---
+
+## Overriding a Class Attribute
+
+```python
+class Dog:
+    legs = 4
+
+dog = Dog()
+dog.legs = 3
+```
+
+Now:
+
+```python
+print(dog.legs)     # 3
+print(Dog.legs)     # 4
+```
+
+### Explanation
+- `dog.legs = 3` creates an instance attribute.
+- The class attribute remains unchanged.
+- Instance attribute takes priority during lookup.
+
+---
+
+## Best Practices for Designing Classes
+
+### ✅ Use Instance Attributes for
+- Data unique to each object.
+- Names, ages, IDs, balances, etc.
+
+### ✅ Use Class Attributes for
+- Shared values.
+- Constants and configuration settings.
+
+### ✅ Use Getter Methods When
+- You want controlled access to internal variables.
+- You may change implementation later.
+
+### ✅ Use Leading Underscores
+- To indicate internal/private variables.
+- To warn users not to modify directly.
+
+---
+
+## Key Takeaways
+
+- A **class** is a blueprint for creating objects.
+- **Instance attributes** belong to individual objects.
+- **Class attributes** belong to the class and are shared.
+- `self` refers to the current object instance.
+- Methods automatically receive `self`.
+- A leading underscore (`_`) signals an internal/private variable.
+- Getter methods provide controlled access to data.
+- Instance attributes override class attributes when names conflict.
+- Good class design improves readability, maintainability, and ease of use.
+
+---
+
+## Quick Revision
+
+```python
+class Dog:
+    _legs = 4
+
+    def __init__(self, name):
+        self.name = name
+
+    def get_legs(self):
+        return self._legs
+```
+
+```python
+dog = Dog("Rover")
+
+print(dog.name)        # Rover
+print(dog.get_legs())  # 4
+print(Dog._legs)       # 4
+```
+
+**Remember:** Writing a class is like designing an interface. Think about how future users (including future you) will interact with it.
+
+
+````
+# Static and Instance Methods
+
+## Overview
+
+Methods in a class can be categorized into two main types:
+
+1. **Instance Methods** → Work with a specific object (instance).
+2. **Static Methods** → Belong to the class itself and do not depend on any particular instance.
+
+Understanding the difference helps you design cleaner and more maintainable classes.
+
+---
+
+# Example Project: WordSet
+
+The lesson demonstrates a class that stores unique words from text.
+
+```python
+class WordSet:
+    def __init__(self):
+        self.words = set()
+```
+
+### Notes
+
+- `self.words` is an empty set.
+- A set stores only unique values.
+- Each `WordSet` instance maintains its own collection of words.
+
+---
+
+# Adding Text to the Set
+
+The goal is to allow users to pass complete sentences.
+
+```python
+word_set = WordSet()
+
+word_set.add_text("Hi, I'm learning Python!")
+word_set.add_text("Here is another sentence.")
+```
+
+Instead of manually cleaning punctuation, the class handles it automatically.
+
+---
+
+# The `add_text()` Instance Method
+
+```python
+def add_text(self, text):
+    text = self.clean_text(text)
+
+    for word in text.split():
+        self.words.add(word)
+```
+
+### What Happens?
+
+1. Text is cleaned.
+2. Sentence is split into words.
+3. Each word is added to the set.
+
+---
+
+## Why is `add_text()` an Instance Method?
+
+```python
+def add_text(self, text):
+```
+
+It uses:
+
+```python
+self.words
+```
+
+Since it works with a specific object's data, it must receive `self`.
+
+### Instance Method Characteristics
+
+✅ Has `self` parameter
+
+✅ Works with instance attributes
+
+✅ Belongs to a specific object
+
+✅ Can modify object state
+
+---
+
+# Cleaning Text
+
+Initially:
+
+```python
+def clean_text(self, text):
+    text = text.replace("!", "")
+    text = text.replace(".", "")
+    text = text.replace(",", "")
+    text = text.replace("'", "")
+
+    return text.lower()
+```
+
+### What It Does
+
+Removes punctuation:
+
+```python
+"Hello, World!"
+```
+
+Becomes:
+
+```python
+"hello world"
+```
+
+### Also
+
+```python
+.lower()
+```
+
+converts everything to lowercase.
+
+---
+
+# Function Chaining
+
+Instead of multiple separate statements:
+
+```python
+text = text.replace("!", "")
+text = text.replace(".", "")
+text = text.replace(",", "")
+```
+
+You can chain methods:
+
+```python
+text = text.replace("!", "").replace(".", "").replace(",", "")
+```
+
+### Benefits
+
+- More compact
+- Groups related operations together
+- Improves readability when used reasonably
+
+---
+
+# Splitting Text into Words
+
+```python
+text.split()
+```
+
+Example:
+
+```python
+"hello world python".split()
+```
+
+Output:
+
+```python
+['hello', 'world', 'python']
+```
+
+### Notes
+
+- Splits on spaces by default.
+- Returns a list.
+
+---
+
+# When `self` Is Unused
+
+Notice:
+
+```python
+def clean_text(self, text):
+```
+
+The method never uses `self`.
+
+The code only manipulates the text provided.
+
+### Observation
+
+If a method does not access:
+
+```python
+self.attribute
+```
+
+or
+
+```python
+self.method()
+```
+
+it might not need to be an instance method.
+
+---
+
+# Static Methods
+
+A static method belongs to the class rather than an instance.
+
+### Original
+
+```python
+def clean_text(self, text):
+```
+
+### Static Version
+
+```python
+@staticmethod
+def clean_text(text):
+```
+
+### Key Difference
+
+No `self` parameter.
+
+---
+
+# Why Make It Static?
+
+`clean_text()`:
+
+- Doesn't modify object data.
+- Doesn't use instance attributes.
+- Doesn't require access to `self`.
+
+It only processes text.
+
+Therefore:
+
+```python
+@staticmethod
+def clean_text(text):
+```
+
+is more appropriate.
+
+---
+
+# Static Method Example
+
+```python
+class WordSet:
+
+    @staticmethod
+    def clean_text(text):
+        return text.lower()
+```
+
+Usage:
+
+```python
+WordSet.clean_text("HELLO")
+```
+
+Output:
+
+```python
+hello
+```
+
+---
+
+# Static Method vs Instance Method
+
+| Feature | Instance Method | Static Method |
+|----------|---------------|---------------|
+| Uses `self` | ✅ Yes | ❌ No |
+| Accesses instance attributes | ✅ Yes | ❌ No |
+| Belongs to object | ✅ Yes | ❌ No |
+| Belongs to class | ❌ No | ✅ Yes |
+| Decorator needed | ❌ No | ✅ `@staticmethod` |
+
+---
+
+# The `@staticmethod` Decorator
+
+A decorator starts with `@`.
+
+```python
+@staticmethod
+```
+
+It tells Python:
+
+> "Do not automatically pass the instance (`self`) to this method."
+
+Example:
+
+```python
+class MathTools:
+
+    @staticmethod
+    def add(a, b):
+        return a + b
+```
+
+Usage:
+
+```python
+MathTools.add(2, 3)
+```
+
+Output:
+
+```python
+5
+```
+
+---
+
+# What Is a Decorator?
+
+A decorator adds information or behavior to a function.
+
+Example:
+
+```python
+@staticmethod
+def clean_text(text):
+    ...
+```
+
+### Notes
+
+- Decorators always begin with `@`.
+- They appear directly above a function definition.
+- Python uses them to change how functions behave.
+
+---
+
+# Static Attributes
+
+Classes can also contain static (class) attributes.
+
+```python
+class WordSet:
+    replace_puncs = ['!', '.', ',', "'"]
+```
+
+### Notes
+
+- Shared across all instances.
+- Defined in the class body.
+- Not specific to any one object.
+
+---
+
+# Using a Static Attribute
+
+Instead of:
+
+```python
+text.replace("!", "")
+text.replace(".", "")
+text.replace(",", "")
+```
+
+Store punctuation in one place:
+
+```python
+class WordSet:
+    replace_puncs = ['!', '.', ',', "'"]
+```
+
+Then:
+
+```python
+for punc in WordSet.replace_puncs:
+    text = text.replace(punc, "")
+```
+
+### Benefits
+
+✅ Easier maintenance
+
+✅ Avoids duplication
+
+✅ Centralized configuration
+
+---
+
+# Accessing Static Attributes
+
+Using class name:
+
+```python
+WordSet.replace_puncs
+```
+
+Or through an instance:
+
+```python
+self.replace_puncs
+```
+
+Both work.
+
+---
+
+# Final WordSet Example
+
+```python
+class WordSet:
+
+    replace_puncs = ['!', '.', ',', "'"]
+
+    def __init__(self):
+        self.words = set()
+
+    def add_text(self, text):
+        text = self.clean_text(text)
+
+        for word in text.split():
+            self.words.add(word)
+
+    @staticmethod
+    def clean_text(text):
+
+        for punc in WordSet.replace_puncs:
+            text = text.replace(punc, "")
+
+        return text.lower()
+```
+
+Usage:
+
+```python
+word_set = WordSet()
+
+word_set.add_text("Hi, I'm learning Python!")
+word_set.add_text("Python is fun.")
+
+print(word_set.words)
+```
+
+Possible Output:
+
+```python
+{'hi', 'im', 'learning', 'python', 'is', 'fun'}
+```
+
+---
+
+# Best Practices
+
+### Use Instance Methods When
+
+✅ Method needs `self`
+
+✅ Uses instance data
+
+✅ Modifies object state
+
+Example:
+
+```python
+def add_text(self, text):
+```
+
+---
+
+### Use Static Methods When
+
+✅ Method does not use `self`
+
+✅ Utility/helper function
+
+✅ Logic belongs to the class
+
+Example:
+
+```python
+@staticmethod
+def clean_text(text):
+```
+
+---
+
+### Use Static Attributes When
+
+✅ Value is shared by all objects
+
+✅ Acts like a constant
+
+✅ Configuration belongs to the class
+
+Example:
+
+```python
+replace_puncs = ['!', '.', ',', "'"]
+```
+
+---
+
+# Key Takeaways
+
+- **Instance methods** use `self` and work with object data.
+- **Static methods** do not use `self` and belong to the class.
+- Use `@staticmethod` to declare a static method.
+- **Static attributes** are shared by all instances.
+- Methods that do not interact with instance data are good candidates for static methods.
+- Decorators begin with `@` and provide Python with additional information about a function.
+- Good class design separates object-specific behavior from general utility functions.
+
+---
+
+## Quick Revision
+
+| Concept | Example |
+|----------|----------|
+| Instance Method | `def add_text(self, text)` |
+| Static Method | `@staticmethod` |
+| Instance Attribute | `self.words` |
+| Static Attribute | `replace_puncs` |
+| Decorator | `@staticmethod` |
+| Split String | `text.split()` |
+| Lowercase Text | `text.lower()` |
+| Add to Set | `self.words.add(word)` |
+
+### Memory Trick
+
+**Instance Method → Needs `self` → Works with object data**
+
+**Static Method → No `self` → Utility/helper function**
+
+**Static Attribute → Shared by every object in the class**
+
+
