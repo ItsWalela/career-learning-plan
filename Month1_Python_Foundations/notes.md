@@ -2283,7 +2283,7 @@ print(Dog._legs)       # 4
 
 **Remember:** Writing a class is like designing an interface. Think about how future users (including future you) will interact with it.
 
-
+````
 ````
 # Static and Instance Methods
 
