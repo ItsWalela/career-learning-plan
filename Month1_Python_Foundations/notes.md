@@ -1,4 +1,4 @@
-<img width="132" height="2268" alt="image" src="https://github.com/user-attachments/assets/3f2ae188-5736-45e3-8c61-21c43e2913cb" /># Python Essential Training Notes
+# Python Essential Training Notes
 
 ## 1. First Python Program
 
