@@ -3172,3 +3172,314 @@ Output:
 ```text
 Yap Yap Yap!
 ```
+
+# Solution: Drawing Shapes
+
+## Overview
+
+This challenge focuses on using inheritance and method overriding to draw ASCII art shapes.
+
+The solution uses a base `Shape` class and specialized child classes that define how each row of the shape should be printed.
+
+The key idea is:
+
+```text
+Shape
+ ├── Square
+ └── Triangle
+```
+
+Each shape shares common behavior but implements its own drawing logic.
+
+---
+
+## The Base Shape Class
+
+The `Shape` class defines properties shared by all shapes:
+
+```python
+class Shape:
+
+    width = 5
+    height = 5
+    print_char = "#"
+```
+
+### Shared Properties
+
+| Property | Purpose |
+|----------|---------|
+| `width` | Width of the shape |
+| `height` | Height of the shape |
+| `print_char` | Character used to draw the shape |
+
+---
+
+## Printing a Shape
+
+The parent class handles printing one row at a time.
+
+```python
+def print(self):
+
+    for row in range(self.height):
+        self.print_row(row)
+```
+
+Instead of knowing how every shape is drawn, the parent class delegates the work to:
+
+```python
+print_row()
+```
+
+implemented by each child class.
+
+---
+
+# Square Implementation
+
+A square is simple because every row looks the same.
+
+```python
+class Square(Shape):
+
+    def print_row(self, row):
+        print(self.print_char * self.width)
+```
+
+### Output
+
+```text
+#####
+#####
+#####
+#####
+#####
+```
+
+The `row` parameter is not needed because every row is identical.
+
+---
+
+# Triangle Implementation
+
+The challenge required implementing a triangle.
+
+A simple solution is:
+
+```python
+class Triangle(Shape):
+
+    def print_row(self, row):
+        print(self.print_char * (row + 1))
+```
+
+### Output
+
+```text
+#
+##
+###
+####
+#####
+```
+
+Each row contains one more character than the previous row.
+
+---
+
+# Building a Symmetrical Triangle
+
+A more advanced version creates a centered triangle.
+
+### Step 1: Define Dimensions
+
+```python
+height = 5
+width = height * 2
+```
+
+The shape is made wider than it is tall to allow centering.
+
+---
+
+### Step 2: Calculate Triangle Width
+
+At each row:
+
+```python
+triangle_width = row * 2 + 1
+```
+
+This produces odd-number widths:
+
+```text
+1
+3
+5
+7
+9
+```
+
+Using odd numbers ensures the triangle remains symmetrical.
+
+---
+
+### Step 3: Calculate Padding
+
+Padding determines how many spaces appear before the triangle.
+
+```python
+padding = int(
+    (self.width - triangle_width) / 2
+)
+```
+
+As the triangle grows wider, the padding becomes smaller.
+
+---
+
+### Step 4: Print Each Row
+
+```python
+print(
+    " " * padding +
+    self.print_char * triangle_width
+)
+```
+
+---
+
+### Output
+
+```text
+    #
+   ###
+  #####
+ #######
+#########
+```
+
+This produces a centered triangle.
+
+---
+
+# Why Odd Widths Matter
+
+Consider:
+
+```text
+#
+###
+#####
+```
+
+Every row expands equally from the center.
+
+If even widths were used:
+
+```text
+##
+####
+######
+```
+
+the shape would not have a true center.
+
+Using:
+
+```python
+row * 2 + 1
+```
+
+guarantees odd widths.
+
+---
+
+# Inheritance in the Solution
+
+The parent `Shape` class provides:
+
+- Width
+- Height
+- Print character
+- General printing logic
+
+Child classes provide:
+
+- Shape-specific row drawing
+
+This follows the principle:
+
+```text
+Shared behavior → Parent class
+
+Unique behavior → Child class
+```
+
+---
+
+# Key Takeaways
+
+- Inheritance allows multiple shapes to share common behavior.
+- The parent class controls the overall printing process.
+- Child classes implement shape-specific drawing logic.
+- A square prints the same row repeatedly.
+- A triangle increases its width on each row.
+- Symmetrical triangles require:
+  - Odd row widths
+  - Padding for centering
+- Method overriding allows each child class to customize `print_row()`.
+
+---
+
+## Quick Revision
+
+### Square
+
+```python
+print(self.print_char * self.width)
+```
+
+Output:
+
+```text
+#####
+#####
+#####
+#####
+#####
+```
+
+### Triangle
+
+```python
+print(self.print_char * (row + 1))
+```
+
+Output:
+
+```text
+#
+##
+###
+####
+#####
+```
+
+### Symmetrical Triangle
+
+```python
+triangle_width = row * 2 + 1
+padding = (self.width - triangle_width) // 2
+```
+
+Output:
+
+```text
+    #
+   ###
+  #####
+ #######
+#########
+```
