@@ -158,7 +158,7 @@ You are expected to solve the challenge, not just hard-code the answer. The cons
 
 ---
 
-# Variables and Types
+# 4. Variables and Types
 
 ## Variables
 - A variable is a name that refers to a value.
@@ -237,7 +237,7 @@ x == 5      # Comparison; evaluates to True
 ````
 
 ---
-# Data Structures
+# 5. Data Structures
 
 Data structures store and organize multiple values. Python’s common built-in structures include lists, sets, tuples, and dictionaries.
 
@@ -321,7 +321,7 @@ my_dict["apple"] = "a fruit that can also be green"
 ````
 ---
 
-# Operators
+# 6. Operators
 
 Operators perform actions on values and variables. They can calculate results, compare values, or check conditions.
 
@@ -415,7 +415,7 @@ For strings, membership checks for a substring, so `"cat" in "catatonic"` is als
 ````
 ---
 
-# Control Flow
+# 7. Control Flow
 
 Control flow determines which parts of a program run and how many times they run. Python uses conditionals and loops to control execution.
 
@@ -487,7 +487,7 @@ If the condition never becomes false, the loop can run indefinitely. This is cal
 ````
 ---
 
-# Functions
+# 8. Functions
 
 A function is a reusable block of code that performs a task. It can accept input values, called **arguments**, and return a result.
 
@@ -557,7 +557,7 @@ print(result)  # None
 ````
 ---
 
-# Classes and Objects
+# 9. Classes and Objects
 
 A **class** is a blueprint for creating objects. It groups related data (attributes) and behavior (methods) together. An **object** is an instance created from a class.
 
@@ -707,7 +707,7 @@ factorial_recursive(3)
 ````
 ---
 
-# Integers and Floats
+# 10. Integers and Floats
 
 Python’s `int` type represents whole numbers, while `float` represents numbers with a fractional part. Mixing integers and floats in arithmetic usually produces a float. The `/` operator always returns a float.
 
@@ -762,7 +762,7 @@ For calculations where exact decimal values matter—such as money—consider Py
 ````
 ---
 
-# Other Types of Numbers
+# 11. Other Types of Numbers
 
 Python’s `int()` can convert numeric strings to integers. It can also parse strings written in another number base.
 
@@ -883,7 +883,7 @@ not (have_umbrella or weather_is_nice)
 ````
 ---
 
-# Strings
+# 12. Strings
 
 Strings store text. Python provides tools to access parts of a string, format output, and work with multiline text.
 
@@ -2826,3 +2826,349 @@ replace_puncs = ['!', '.', ',', "'"]
 **Static Attribute → Shared by every object in the class**
 
 
+# Inheritance
+
+## Overview
+
+Inheritance allows one class to extend another class.
+
+The class being extended is called the **parent class** (or superclass).
+
+The class that extends it is called the **child class** (or subclass).
+
+The child class automatically inherits the parent class's attributes and methods.
+
+```text
+Parent Class
+      ↓
+Child Class
+```
+
+This promotes code reuse and reduces duplication.
+
+---
+
+## Creating a Child Class
+
+Suppose we already have a `Dog` class.
+
+```python
+class Dog:
+
+    def __init__(self, name):
+        self.name = name
+
+    def speak(self):
+        print(f"{self.name} says bark!")
+```
+
+A child class can inherit from `Dog` by placing the parent class name in parentheses.
+
+```python
+class Chihuahua(Dog):
+    pass
+```
+
+The `pass` statement means:
+
+```text
+Create the class, but don't add anything yet.
+```
+
+---
+
+## Inherited Behavior
+
+Even though `Chihuahua` is empty, it inherits everything from `Dog`.
+
+```python
+roxy = Chihuahua("Roxy")
+
+roxy.speak()
+```
+
+Output:
+
+```text
+Roxy says bark!
+```
+
+The child class automatically receives:
+
+- Attributes
+- Methods
+- Constructor behavior
+
+from the parent class.
+
+---
+
+## Overriding Methods
+
+A child class can replace a parent's method by defining a method with the same name.
+
+```python
+class Chihuahua(Dog):
+
+    def speak(self):
+        print(f"{self.name} says yap yap yap!")
+```
+
+Usage:
+
+```python
+roxy = Chihuahua("Roxy")
+
+roxy.speak()
+```
+
+Output:
+
+```text
+Roxy says yap yap yap!
+```
+
+The child's version is used instead of the parent's.
+
+---
+
+## Parent and Child Classes Together
+
+The parent class remains unchanged.
+
+```python
+dog = Dog("Rover")
+
+dog.speak()
+```
+
+Output:
+
+```text
+Rover says bark!
+```
+
+Meanwhile:
+
+```python
+roxy = Chihuahua("Roxy")
+
+roxy.speak()
+```
+
+Output:
+
+```text
+Roxy says yap yap yap!
+```
+
+Each class uses its own implementation.
+
+---
+
+## Adding New Methods
+
+Child classes can also introduce completely new behavior.
+
+```python
+class Chihuahua(Dog):
+
+    def speak(self):
+        print(f"{self.name} says yap yap yap!")
+
+    def wag_tail(self):
+        print("Vigorous wagging!")
+```
+
+Usage:
+
+```python
+roxy.wag_tail()
+```
+
+Output:
+
+```text
+Vigorous wagging!
+```
+
+---
+
+# Inheriting from Built-in Classes
+
+Inheritance is not limited to your own classes.
+
+You can extend Python's built-in classes.
+
+For example:
+
+```python
+class UniqueList(list):
+    pass
+```
+
+This creates a custom class based on the built-in `list`.
+
+---
+
+## Overriding append()
+
+Suppose we want a list that stores only unique values.
+
+```python
+class UniqueList(list):
+
+    def append(self, item):
+
+        if item in self:
+            return
+
+        super().append(item)
+```
+
+---
+
+## Why Use super()?
+
+This version is incorrect:
+
+```python
+self.append(item)
+```
+
+because it calls the same method repeatedly.
+
+```text
+append()
+    ↓
+append()
+    ↓
+append()
+```
+
+Result:
+
+```text
+Infinite recursion
+```
+
+Instead:
+
+```python
+super().append(item)
+```
+
+calls the parent's version of `append()`.
+
+---
+
+## Example
+
+```python
+values = UniqueList()
+
+values.append(1)
+values.append(1)
+values.append(2)
+
+print(values)
+```
+
+Output:
+
+```text
+[1, 2]
+```
+
+The duplicate value is ignored.
+
+---
+
+# Using super() in Constructors
+
+A child class may need its own attributes while still preserving initialization from the parent.
+
+```python
+class ChildClass(ParentClass):
+
+    def __init__(self):
+
+        super().__init__()
+
+        self.some_property = "value"
+```
+
+`super().__init__()` ensures the parent class initialization runs before the child adds its own setup.
+
+---
+
+## When to Use Inheritance
+
+Inheritance is useful when:
+
+✅ A child "is a type of" the parent
+
+Examples:
+
+```text
+Chihuahua is a Dog
+
+SavingsAccount is a BankAccount
+
+Student is a Person
+```
+
+Inheritance may not be appropriate when classes do not share a true parent-child relationship.
+
+---
+
+## Best Practices
+
+✅ Use inheritance to reuse existing functionality
+
+✅ Override methods only when behavior needs to change
+
+✅ Use `super()` when calling parent methods
+
+✅ Keep inheritance hierarchies simple
+
+✅ Prefer clear design over deep class structures
+
+---
+
+## Key Takeaways
+
+- Inheritance allows one class to extend another.
+- The parent class provides attributes and methods.
+- The child class automatically inherits them.
+- Child classes can override inherited methods.
+- Child classes can add new methods.
+- `super()` calls methods from the parent class.
+- Built-in Python classes can also be extended.
+- Inheritance helps reduce duplicated code.
+
+---
+
+## Quick Revision
+
+```python
+class Dog:
+
+    def speak(self):
+        print("Bark!")
+
+class Chihuahua(Dog):
+
+    def speak(self):
+        print("Yap Yap Yap!")
+
+roxy = Chihuahua()
+
+roxy.speak()
+```
+
+Output:
+
+```text
+Yap Yap Yap!
+```
